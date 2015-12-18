@@ -48,7 +48,7 @@ class. It will assume the credentials from the AWS SDK.
 ```javascript
 AWS.config.credentials.get(function() {
 
-    client = new AWS.CognitoSyncManager();
+    client = new AWS.CognitoSync();
 
     // YOUR CODE HERE
 
