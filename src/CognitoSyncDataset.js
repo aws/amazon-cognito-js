@@ -156,15 +156,15 @@ AWS.CognitoSyncManager.Dataset = (function() {
 
     CognitoSyncDataset.prototype.putAll = function(values, callback) {
 
-        var isValid = true;
-
         for (var key in values) {
             if (values.hasOwnProperty(key)) {
-                if (!this.validateKey(key)) { isValid = false; }
+                var valueType = typeof values[key];
+                if (valueType !== 'string') {
+                    return callback(new Error('The key "' + key + '" should have a value type of "string" but was "' + valueType + '".'));
+                }
+                if (!this.validateKey(key)) { return callback(new Error('Object contains invalid key: ' + key )); }
             }
         }
-
-        if (!isValid) { return callback(new Error('Object contains invalid keys.')); }
 
         this.local.putAllValues(this.getIdentityId(), this.datasetName, values, callback);
 
