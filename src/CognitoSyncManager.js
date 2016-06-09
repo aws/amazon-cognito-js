@@ -143,5 +143,8 @@ if (AWS === undefined) {
     AWS.CognitoSyncManager.prototype.getIdentityId = function () {
         return this.provider.identityId;
     };
-
+    
+    AWS.CognitoSyncManager.prototype.purgeDataset = function(datasetName, callback) {
+        this.local.purgeDataset(this.getIdentityId(), datasetName, callback);
+    };
 }
