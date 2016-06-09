@@ -521,6 +521,7 @@ AWS.CognitoSyncManager.LocalStorage = (function() {
 
                 if (err) { return callback(err); }
 
+                if (metadata) {
                 metadata.setLastModifiedDate(new Date());
                 metadata.setLastSyncCount(-1);
 
@@ -528,7 +529,9 @@ AWS.CognitoSyncManager.LocalStorage = (function() {
                     if (err) { return callback(err); }
                     return callback(null, true);
                 });
-
+                } else {
+                    return callback(err, true);
+                }
             });
 
         });
