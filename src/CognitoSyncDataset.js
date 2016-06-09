@@ -267,7 +267,7 @@ AWS.CognitoSyncManager.Dataset = (function() {
         // Validate/initialize retry count.
         if (retry === undefined) { retry = this.MAX_RETRY; }
 
-        root.logger('Starting synchronization... (retires: ' + retry + ')');
+        root.logger('Starting synchronization... (retries: ' + retry + ')');
 
         if (retry < 0) {
             return callback.onFailure(new Error('Synchronize failed: exceeded maximum retry count.'));
@@ -284,7 +284,7 @@ AWS.CognitoSyncManager.Dataset = (function() {
             // Detect if merged datasets.
             if (mergedDatasets.length > 0) {
 
-                root.logging('Deferring to .onDatasetsMerged.');
+                root.logger('Deferring to .onDatasetsMerged.');
 
                 return callback.onDatasetsMerged(root, mergedDatasets, function(isContinue) {
 
@@ -331,7 +331,7 @@ AWS.CognitoSyncManager.Dataset = (function() {
 
                             if (err) { return callback.onFailure(err); }
 
-                            root.logger('Fetch remote updates... found ' + remoteRecords.records.length + '.');
+                            root.logger('Fetching remote updates... found ' + remoteRecords.records.length + '.');
 
                             var mergedNameList = remoteRecords.getMergedDatasetNameList();
 
@@ -354,16 +354,16 @@ AWS.CognitoSyncManager.Dataset = (function() {
 
                                 return callback.onDatasetDeleted(root, remoteRecords.getDatasetName(), function(doContinue) {
 
-                                    root.logging('Dataset should be deleted. Deferring to .onDatasetDeleted.');
+                                    root.logger('Dataset should be deleted. Deferring to .onDatasetDeleted.');
 
                                     if (doContinue) {
-                                        root.logging('.onDatasetDeleted returned true, purging dataset locally.');
+                                        root.logger('.onDatasetDeleted returned true, purging dataset locally.');
                                         return root.local.purgeDataset(root.getIdentityId(), root.datasetName, function(err) {
                                             if (err) { return callback.onFailure(err); }
                                             return root._synchronizeInternal(callback, --retry);
                                         });
                                     } else {
-                                        root.logging('.onDatasetDeleted returned false, cancelling sync.');
+                                        root.logger('.onDatasetDeleted returned false, cancelling sync.');
                                         return callback.onFailure(new Error('Cancelled due to .onDatasetDeleted result.'));
                                     }
 
