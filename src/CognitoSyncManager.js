@@ -31,9 +31,9 @@ if (AWS === undefined) {
 
         var USER_AGENT = 'CognitoJavaScriptSDK/1';
 
-        this.provider = AWS.config.credentials;
+        this.provider = options.credentials || AWS.config.credentials;
         this.identityPoolId = this.provider.params.IdentityPoolId;
-        this.region = AWS.config.region;
+        this.region = options.region || AWS.config.region;
 
         // Setup logger.
         this.logger = options.log;
