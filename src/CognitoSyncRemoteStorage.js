@@ -27,12 +27,12 @@ AWS.CognitoSyncManager.RemoteStorage = (function() {
      * @constructor
      */
 
-    var CognitoSyncRemoteStorage = function (identityPoolId, provider) {
+    var CognitoSyncRemoteStorage = function (identityPoolId, provider, region) {
 
         this.identityPoolId = identityPoolId;
         this.provider = provider;
-        this.client = new AWS.CognitoSync();
-
+        this.client = new AWS.CognitoSync({region: region, credentials: provider});
+        
     };
 
     CognitoSyncRemoteStorage.prototype.userAgent = '';
