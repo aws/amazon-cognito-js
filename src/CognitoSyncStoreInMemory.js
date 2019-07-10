@@ -171,7 +171,11 @@ AWS.CognitoSyncManager.StoreInMemory = (function() {
 
     CognitoSyncStoreInMemory.prototype.wipe = function (callback) {
         this.store = {};
-        return callback(null, true);
+
+        if (callback) {
+            return callback(null, true);
+        }
+        return this;
     };
 
     return CognitoSyncStoreInMemory;
