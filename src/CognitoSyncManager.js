@@ -17,9 +17,9 @@ if (AWS === undefined) {
 
         var USER_AGENT = 'CognitoJavaScriptSDK/1';
 
-        this.provider = AWS.config.credentials;
+        this.provider = options.credentials || AWS.config.credentials;
         this.identityPoolId = this.provider.params.IdentityPoolId;
-        this.region = AWS.config.region;
+        this.region = options.region || AWS.config.region;
 
         // Setup logger.
         this.logger = options.log;
@@ -32,7 +32,7 @@ if (AWS === undefined) {
         this.local = new AWS.CognitoSyncManager.LocalStorage({DataStore: options.DataStore ? options.DataStore : AWS.CognitoSyncManager.StoreLocalStorage});
 
         // Initialize remote store.
-        this.remote = new AWS.CognitoSyncManager.RemoteStorage(this.identityPoolId, this.provider);
+        this.remote = new AWS.CognitoSyncManager.RemoteStorage(this.identityPoolId, this.provider, this.region);
         this.remote.setUserAgent(USER_AGENT);
 
     };
