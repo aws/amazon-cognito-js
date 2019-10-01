@@ -476,6 +476,8 @@ AWS.CognitoSyncManager.LocalStorage = (function() {
 
                 });
 
+            } else {
+                callback(null, true);
             }
 
         };
